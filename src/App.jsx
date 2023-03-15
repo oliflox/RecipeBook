@@ -5,21 +5,25 @@ function App() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [ingredients, setIngredients] = useState('');
-  const [editRecipeId, setEditRecipeId] = useState(null);
+  const [shoppingList, setShoppingList] = useState([]);
+  const [editRecipeId, setEditRecipeId] = useState(null)
+  
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (editRecipeId !== null) {
-      const updatedRecipes = [...recipes];
-      const index = updatedRecipes.findIndex((recipe) => recipe.id === editRecipeId);
+      const updatedRecipes = [...recipes]
+      const index = updatedRecipes.findIndex(
+        (recipe) => recipe.id === editRecipeId,
+      )
       updatedRecipes[index] = {
         id: editRecipeId,
         title: title,
         description: description,
         ingredients: ingredients.split(',').map((item) => item.trim()),
-      };
-      setRecipes(updatedRecipes);
-      setEditRecipeId(null);
+      }
+      setRecipes(updatedRecipes)
+      setEditRecipeId(null)
     } else {
       setRecipes([
         ...recipes,
@@ -29,30 +33,43 @@ function App() {
           description: description,
           ingredients: ingredients.split(',').map((item) => item.trim()),
         },
-      ]);
+      ])
     }
-    setTitle('');
-    setDescription('');
-    setIngredients('');
-  };
+    setTitle('')
+    setDescription('')
+    setIngredients('')
+  }
 
   const handleEdit = (id) => {
-    const recipe = recipes.find((recipe) => recipe.id === id);
-    setTitle(recipe.title);
-    setDescription(recipe.description);
-    setIngredients(recipe.ingredients.join(', '));
-    setEditRecipeId(id);
-  };
+    const recipe = recipes.find((recipe) => recipe.id === id)
+    setTitle(recipe.title)
+    setDescription(recipe.description)
+    setIngredients(recipe.ingredients.join(', '))
+    setEditRecipeId(id)
+  }
 
   const handleDelete = (id) => {
     const updatedRecipes = recipes.filter((recipe) => recipe.id !== id);
     setRecipes(updatedRecipes);
   };
 
+  const handleAddToShoppingList = (recipe) => {
+    const newIngredients = recipe.ingredients.filter(
+      (ingredient) => !shoppingList.includes(ingredient)
+    );
+    setShoppingList([...shoppingList, ...newIngredients]);
+  };
+
+  const handleRemoveItem = (id) => {
+    const updatedList = shoppingList.filter((item) => item.id !== id);
+    setshoppingList(updatedList);
+  };
+  
+
   return (
     <div>
       <h1>Mon livre de recettes</h1>
-      <h2>{editRecipeId !== null ? 'Modifier une recette' : 'Ajouter une recette'}</h2>
+      <h2>Ajouter une recette</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="title">Titre:</label>
         <input
@@ -74,10 +91,14 @@ function App() {
           id="ingredients"
           value={ingredients}
           onChange={(e) => setIngredients(e.target.value)}
-          />
-        <button type="submit">{editRecipeId !== null ? 'Modifier' : 'Ajouter'}</button>
+        />
+        <button type="submit">
+          {editRecipeId !== null ? 'Modifier' : 'Ajouter'}
+        </button>
         {editRecipeId !== null && (
-          <button type="button" onClick={() => setEditRecipeId(null)}>Annuler</button>
+          <button type="button" onClick={() => setEditRecipeId(null)}>
+            Annuler
+          </button>
         )}
       </form>
       <h2>Liste des recettes</h2>
@@ -85,7 +106,7 @@ function App() {
         <div key={recipe.id}>
           <h2>{recipe.title}</h2>
           <p>{recipe.description}</p>
-          <h3>Ingrédients nécéssaires</h3>
+          <h3>Ingrédients nécessaires</h3>
           <ul>
             {recipe.ingredients.map((ingredient, index) => (
               <li key={index}>{ingredient}</li>
@@ -93,8 +114,17 @@ function App() {
           </ul>
           <button onClick={() => handleEdit(recipe.id)}>Modifier</button>
           <button onClick={() => handleDelete(recipe.id)}>Supprimer</button>
+          <button onClick={() => handleAddToShoppingList(recipe)}>
+            Ajouter à la liste de courses
+          </button>
         </div>
       ))}
+      <h2>Liste de courses</h2>
+      <ul>
+        {shoppingList.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 }
