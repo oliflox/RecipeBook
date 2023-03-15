@@ -59,11 +59,6 @@ function App() {
     );
     setShoppingList([...shoppingList, ...newIngredients]);
   };
-
-  const handleRemoveItem = (id) => {
-    const updatedList = shoppingList.filter((item) => item.id !== id);
-    setshoppingList(updatedList);
-  };
   
 
   return (
@@ -71,6 +66,7 @@ function App() {
       <h1>Mon livre de recettes</h1>
       <h2>Ajouter une recette</h2>
       <form onSubmit={handleSubmit}>
+        <div>
         <label htmlFor="title">Titre:</label>
         <input
           type="text"
@@ -78,6 +74,8 @@ function App() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+        </div>
+        <div>
         <label htmlFor="description">Description:</label>
         <input
           type="text"
@@ -85,6 +83,8 @@ function App() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+        </div>
+        <div>
         <label htmlFor="ingredients">Ingrédients:</label>
         <input
           type="text"
@@ -92,6 +92,8 @@ function App() {
           value={ingredients}
           onChange={(e) => setIngredients(e.target.value)}
         />
+        </div>
+        <div>
         <button type="submit">
           {editRecipeId !== null ? 'Modifier' : 'Ajouter'}
         </button>
@@ -100,23 +102,28 @@ function App() {
             Annuler
           </button>
         )}
+        </div>
+        
       </form>
       <h2>Liste des recettes</h2>
       {recipes.map((recipe) => (
-        <div key={recipe.id}>
+        <div id='recipe' key={recipe.id}>
           <h2>{recipe.title}</h2>
           <p>{recipe.description}</p>
-          <h3>Ingrédients nécessaires</h3>
+          <h4>Ingrédients nécessaires</h4>
           <ul>
             {recipe.ingredients.map((ingredient, index) => (
               <li key={index}>{ingredient}</li>
             ))}
           </ul>
+          <div id='RecipeButton'>
           <button onClick={() => handleEdit(recipe.id)}>Modifier</button>
           <button onClick={() => handleDelete(recipe.id)}>Supprimer</button>
           <button onClick={() => handleAddToShoppingList(recipe)}>
             Ajouter à la liste de courses
           </button>
+          </div>
+          
         </div>
       ))}
       <h2>Liste de courses</h2>
