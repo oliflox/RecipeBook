@@ -108,7 +108,7 @@ function App() {
       <h2>Liste des recettes</h2>
       {recipes.map((recipe) => (
         <div id='recipe' key={recipe.id}>
-          <h2>{recipe.title}</h2>
+          <h3>{recipe.title}</h3>
           <p>{recipe.description}</p>
           <h4>Ingrédients nécessaires</h4>
           <ul>

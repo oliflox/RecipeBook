@@ -23,13 +23,20 @@ body {
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: none;
+  background-color: #2C365E;
+  color: white;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
+  margin: 5px;
   font-family: inherit;
   cursor: pointer;
-  transition: border-color 0.25s;
+}
+
+button:hover{
+  background-color: #4B8F8C;
+  transition: 0.4s;
 }
 
 button:focus,
@@ -38,17 +45,27 @@ button:focus-visible {
 }
 
 h1 {
+  
   font-size: 3.2em;
   text-align: center;
   line-height: 1.1;
 }
 
-h2,h4{
+h2{
+  margin: 10px 0 ;
+}
+
+h4,h3{
   margin: 0;
+}
+
+p{
+margin:0 0 10px 0;
 }
 
 ul{
   padding: 0;
+  margin: 0 0 10px 0;
 }
 
 li{
@@ -59,6 +76,7 @@ li{
 background-color: rgb(241, 241, 241);
 padding: 15px;
 border-radius: 15px;
+margin-bottom: 30px;
 }
 
 #RecipeButton{
@@ -71,8 +89,7 @@ form{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
-    
+    justify-content: space-between;
 }
 
 form div{
@@ -81,8 +98,8 @@ form div{
 }
 form div input{
 margin-left:10px;
-}
-
-form div button{
-  
+border: none;
+background-color: rgb(241, 241, 241);
+padding: 10px;
+border-radius: 5px;
 }
